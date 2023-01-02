@@ -1,3 +1,5 @@
+import "./main.scss";
+
 class Main {
   render() {
     const btn = document.createElement("button");
