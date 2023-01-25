@@ -4,9 +4,12 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: {
+    "hello-world": "./src/hello-world.js",
+    "kiwi": "./src/kiwi.js"
+  },
   output: {
-    filename: "bundle.[contenthash].js",
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "./dist"),
   },
   mode: "production",
@@ -16,18 +19,32 @@ module.exports = {
         test: /\.scss$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
+      {
+        test: /\.(png|jpg|jpeg)$/,
+        type: "asset/resource",
+      },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "styles.[contenthash].css",
+      filename: "[name].[contenthash].css",
     }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: "Webpack demo",
+      title: "Hello world",
+      filename: 'hello-world.html',
       meta: {
-        description: "Some description",
+        description: "Hello world description",
       },
+      chunks: ['hello-world']
+    }),
+    new HtmlWebpackPlugin({
+      title: "Kiwi",
+      filename: "kiwi.html",
+      meta: {
+        description: "Kiwi description",
+      },
+      chunks: ['kiwi']
     }),
   ],
 };
